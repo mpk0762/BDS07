@@ -1,15 +1,28 @@
 import './styles.css';
 
 import ResultCard from 'components/ResultCard';
-import React from 'react';
+import React, { useState } from 'react';
+
+type FormData = {
+  cep: string;
+  test: string;
+};
 
 const CepSearch = () => {
+  const [FormData, setFormData] = useState<FormData>({
+    cep: '',
+    test: '',
+  });
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('mudou para: ' + event.target.value);
+    const name = event.target.name;
+    const value = event.target.value;
+
+    setFormData({ ...FormData, [name]: value });
   };
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log('clicou no botão');
+    console.log(FormData);
   };
 
   return (
@@ -20,6 +33,15 @@ const CepSearch = () => {
           <div className="form-container">
             <input
               type="text"
+              name="cep"
+              value={FormData.cep}
+              className="search-input"
+              placeholder="CEP (somente números)"
+              onChange={handleChange}
+            />
+            <input
+              type="text"
+              name={FormData.test}
               className="search-input"
               placeholder="CEP (somente números)"
               onChange={handleChange}
